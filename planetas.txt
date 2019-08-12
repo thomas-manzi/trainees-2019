@@ -2,6 +2,7 @@ Mercúrio
 Vênus
 Terra
 Marte
+YXJ-775
 Júpiter
 Saturno
 Urano
