@@ -1,0 +1,4 @@
+git e modelagem de apis
+front-end
+back-end
+devops
