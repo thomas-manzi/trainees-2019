@@ -1,0 +1,485 @@
+swagger: "2.0"
+info:
+  description: "Sciensa Filmes API"
+  version: "1.0.0"
+  title: "API de Filmes"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/api/v1"
+produces:
+  - "application/json"
+schemes:
+- "https"
+paths:
+  /artistas:
+    post:
+      summary: "rota para cadastro de artistas"
+      operationId: "createArtist"
+      parameters:
+      - in: body
+        name: "request"
+        required: true
+        schema:
+          properties:
+            artistas:
+                $ref: '#/definitions/Artista'
+      responses:
+        201:
+          description: "artista cadastrado"
+          schema:
+            properties:
+              filmes:
+                type: array
+                items:
+                  $ref: '#/definitions/Filme'
+                  
+        400:
+          description: "parametros do artista invalidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        
+        500:
+          description: "erro nao mapeado"
+          schema: 
+            $ref: '#/definitions/ResponseError'
+    put:
+      summary: "Atualizar Artista" 
+      operationId: "updateArtista"
+      parameters:
+      - in: body
+        name: "request"
+        required: true
+        schema:
+          $ref: '#/definitions/Artista'
+      responses:
+        200:
+          description: "atualizado"
+          schema:
+            $ref: '#/definitions/Artista'
+        400:
+          description: "parametros do artista invalido"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description: "artista nao encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        405:
+          description: "validacao excessiva"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        
+          
+        
+    
+            
+  /generos:
+    post:
+      summary: "rotas para cadastrar genero"
+      operationId: "createGenero"
+      parameters:
+      - in: body
+        name: "request"
+        required: true
+        schema:
+          properties:
+            generos:
+              $ref: '#/definitions/Genero'
+      responses:
+        201:
+          description: "genero cadastrado com sucesso"
+          schema:
+            properties:
+              filmes:
+                $ref: '#/definitions/Filme'
+        400:
+          description: "parametros invalidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description: "genero informado nao encontrado"
+          schema: 
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+            
+    put:
+      summary: "Atualizar Genero" 
+      operationId: "updateGenero"
+      parameters:
+      - in: body
+        name: "request"
+        required: true
+        schema:
+          $ref: '#/definitions/Genero'
+      responses:
+        200:
+          description: "atualizado"
+          schema:
+            $ref: '#/definitions/Genero'
+        400:
+          description: "parametros do genero invalido"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description: "genero nao encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        405:
+          description: "validacao excessiva"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        
+        
+        
+    
+  /filmes:
+    post:
+      summary: "rota para cadastro de filmes"
+      operationId: "cadastroFilme"
+      parameters:
+      - in: body
+        name: "request"
+        required: true
+        schema:
+          properties:
+            filmes:
+              $ref: '#/definitions/Filme'
+      responses:
+        201:
+          description: "filme cadastrado com sucesso"
+          schema:
+            properties:
+              generos:
+                $ref: '#/definitions/Genero'
+              artistas:
+                $ref: '#/definitions/Artista'
+        400:
+          description: "parametros invalidos"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+            
+    put:
+      summary: "Atualizar Filmes" 
+      operationId: "updateFilme"
+      parameters:
+      - in: body
+        name: "request"
+        required: true
+        schema:
+          $ref: '#/definitions/Filme'
+      responses:
+        200:
+          description: "atualizado"
+          schema:
+            $ref: '#/definitions/Filme'
+        400:
+          description: "parametros do filme invalido"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description: "filme nao encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        405:
+          description: "validacao excessiva"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+            
+  /filmes/{filmeTitulo}:
+    get:
+      summary: "consulta de informacoes dos filmes" 
+      operationId: "getFilmeDetails"
+      parameters:
+      - $ref: '#/parameters/filmeTitulo'
+      responses:
+        200:
+          description: "sucesso"
+          schema:
+              $ref: '#/definitions/Filme'
+        400:
+          description: "titulo invalido"
+          schema:
+            $ref: "#/definitions/ResponseError"
+        404:
+          description: "titulo nao encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: "#/definitions/ResponseError"
+    delete:
+      summary: "delete um filme"
+      operationId: "deleteFilme"
+      parameters:
+      - $ref: '#/parameters/filmeTitulo'
+      responses:
+        400:
+          description: "titulo nao encontrado"
+        404:
+          description: "titulo nao existe"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        
+        
+    
+            
+  /artistas/{nomeArtista}:
+    get:
+      summary: "consulta de artista"
+      operationId: "getArtistaDetails"
+      parameters:
+      - $ref: '#/parameters/nomeArtista'
+      responses:
+        200:
+          description: "sucesso"
+          schema:
+              $ref: '#/definitions/Artista'
+        400:
+          description: "parametros informados invalidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description: "nome do artista nao encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+            
+    delete:
+      summary: "delete um artista"
+      operationId: "deleteArtista"
+      parameters:
+      - $ref: '#/parameters/nomeArtista'
+      responses:
+        400:
+          description: "artista nao encontrado"
+        404:
+          description: "artista nao existe"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+            
+  /generos/{nomeGenero}:
+    get:
+      summary: "busca de generos" 
+      operationId: "getGeneroDetails"
+      parameters:
+      - $ref: '#/parameters/nomeGenero'
+      responses:
+        200:
+          description: "sucesso"
+          schema:
+            $ref: '#/definitions/Genero'
+        400:
+          description: "parametros informados invalidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description: "parametros nao encontrados"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+          
+    delete:
+      summary: "delete um genero"
+      operationId: "deleteGenero"
+      parameters:
+      - $ref: '#/parameters/nomeGenero'
+      responses:
+        400:
+          description: "genero nao encontrado"
+        404:
+          description: "genero nao existe"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+            
+  /artistas/{nomeArtista}/Filmografia:
+    get:
+      summary: "filmografia do artista"
+      operationId: "getArtistaFilmografia"
+      parameters:
+        - $ref: '#/parameters/nomeArtista'
+      responses:
+        200:
+          description: "sucesso"
+          schema:
+            $ref: '#/definitions/Filmografia'
+        400:
+          description: "parametros informados invalidos"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        404:
+          description: "Artista nao encontrado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+        500:
+          description: "erro nao mapeado"
+          schema:
+            $ref: '#/definitions/ResponseError'
+    
+      
+  /health:
+    get:
+      summary: "Rota de healthcheck da aplicação"
+      operationId: "health"
+      responses:
+        200:
+          description: "API funcionando"
+          schema:
+            properties:
+              version:
+                type: string
+              environment:
+                type: string
+        
+          
+          
+    
+
+definitions:
+  ResponseError:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      cause:
+        type: object
+        properties:
+          name:
+            type: string
+          code:
+            type: number
+          message:
+            type: string
+            
+  ResponseMeta:
+    type: object
+    properties:
+      version:
+        type: string
+      timestamp:
+        type: string
+        format: date-time
+      hostname:
+        type: string
+      numberOfRecords:
+        type: integer
+        format: int32
+      page:
+        type: integer
+        format: int32
+      size:
+        type: integer
+        format: int32
+  Filme:
+    type: object
+    properties:
+      titulo:
+        type: string
+      subtitulo:
+        type: string
+      artistas:
+        type: array
+        items:
+          $ref: '#/definitions/Artista'
+        
+  Artista:
+    type: object
+    properties:
+      name:
+        type: string
+      nacionalidade:
+        type: string
+      dataNacimento:
+        type: string
+        format: date-time
+        
+  Genero:
+    type: object
+    properties:
+      name:
+        type: string
+  
+  Filmografia:
+    type: object
+    properties:
+      filmes:
+        type: array
+        items:
+          $ref: '#/definitions/Filme'
+      artistas:
+        type: array
+        items:
+          $ref: '#/definitions/Artista'
+      generos:
+        type: array
+        items:
+          $ref: '#/definitions/Genero'
+          
+          
+parameters:
+  filmeTitulo:
+    in: path
+    name: "filmeTitulo"
+    type: string
+    required: true
+  
+  nomeGenero:
+    in: path
+    name: "nomeGenero"
+    type: string
+    required: true
+    
+  nomeArtista:
+    in: path
+    name: "nomeArtista"
+    type: string
+    required: true
